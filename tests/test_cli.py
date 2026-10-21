@@ -34,3 +34,44 @@ def test_missing_file_and_usage():
     missing = run_cli(str(ROOT / "nope.slop"))
     assert missing.returncode == 2
     assert "could not read" in missing.stderr
+
+
+def test_check_flag_parses_without_executing():
+    completed = run_cli("--check", str(ROOT / "examples/hello.slop"))
+    assert completed.returncode == 0
+    assert completed.stdout == ""
+    assert completed.stderr == ""
+
+
+def test_check_flag_may_follow_the_path():
+    completed = run_cli(str(ROOT / "examples/hello.slop"), "--check")
+    assert completed.returncode == 0
+    assert completed.stdout == ""
+
+
+def test_check_flag_ignores_runtime_errors(tmp_path: Path):
+    program = tmp_path / "runtime.slop"
+    program.write_text("hallucinate(missing)✨\n", encoding="utf-8")
+    completed = run_cli("--check", str(program))
+    assert completed.returncode == 0
+    assert completed.stdout == ""
+    assert completed.stderr == ""
+
+
+def test_check_flag_reports_syntax_errors(tmp_path: Path):
+    program = tmp_path / "bad.slop"
+    program.write_text("slop x✨\n", encoding="utf-8")
+    completed = run_cli("--check", str(program))
+    assert completed.returncode == 1
+    assert completed.stdout == ""
+    assert completed.stderr == (
+        "SlopLang syntax error at line 1: "
+        "expected '=' after variable name, an initializer is required, found '✨'\n"
+    )
+    assert "Traceback" not in completed.stderr
+
+
+def test_unknown_option_is_a_usage_error():
+    completed = run_cli("--nope", str(ROOT / "examples/hello.slop"))
+    assert completed.returncode == 2
+    assert "unknown option '--nope'" in completed.stderr

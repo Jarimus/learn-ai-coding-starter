@@ -39,7 +39,7 @@ UNSUPPORTED_CHARS: dict[str, str] = {
 
 ESCAPES: dict[str, str] = {
     "n": "\n",
-    "t": "t",
+    "t": "\t",
     "”": "”",
     "\\": "\\",
 }
@@ -112,7 +112,7 @@ class Scanner:
             self.add_token(TokenType.OR)
             return
 
-        raise LexicalError(self.line, f"unexpected charcter '{ch}'")
+        raise LexicalError(self.line, f"unexpected character '{ch}'")
 
     def string(self) -> None:
         chars: list[str] = []

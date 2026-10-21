@@ -74,6 +74,38 @@ hallucinate(x)✨"""
     assert run(source) == "2\n"
 
 
+def test_loadbearing_binding_is_readable_and_immutable():
+    source = """loadbearing LIMIT = 100✨
+slop score = 10✨
+score = score + LIMIT✨
+hallucinate(score)✨"""
+    assert run(source) == "110\n"
+
+
+def test_loadbearing_cannot_be_reassigned():
+    source = """loadbearing LIMIT = 100✨
+LIMIT = 200✨"""
+    assert fails(source) == "SlopLang runtime error at line 2: cannot assign to loadbearing 'LIMIT'"
+
+
+def test_loadbearing_cannot_be_reassigned_from_nested_scope():
+    source = """loadbearing LIMIT = 100✨
+{
+    LIMIT = 200✨
+}"""
+    assert fails(source) == "SlopLang runtime error at line 3: cannot assign to loadbearing 'LIMIT'"
+
+
+def test_loadbearing_can_be_shadowed_in_an_inner_scope():
+    source = """loadbearing LIMIT = 100✨
+{
+    slop LIMIT = 200✨
+    hallucinate(LIMIT)✨
+}
+hallucinate(LIMIT)✨"""
+    assert run(source) == "200\n100\n"
+
+
 def test_loop_body_is_a_fresh_scope_each_iteration():
     source = """slop i = 0✨
 ralph i < 3 {
