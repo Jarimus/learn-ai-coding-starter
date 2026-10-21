@@ -7,5 +7,7 @@
     // Narrow exceptions below: the last matching rule wins.
     { "action": "shell", "resource": "bootdev run *", "effect": "allow" },
     { "action": "run_slop", "resource": "*", "effect": "allow" },
+    // Block launching the explore subagent.
+    { "action": "subagent", "resource": "explore", "effect": "deny" },
   ],
 }

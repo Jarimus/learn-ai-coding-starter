@@ -1,6 +1,7 @@
 ---
 description: Reviews code changes for correctness, clarity, and regressions without modifying anything
 mode: primary
+steps: 2
 permissions:
   # Deny every action first, then re-allow only the read-only discovery tools.
   - action: "*"
@@ -14,16 +15,6 @@ permissions:
     effect: allow
   - action: grep
     resource: "*"
-    effect: allow
-  # Keep the built-in caution around environment files.
-  - action: read
-    resource: "*.env"
-    effect: ask
-  - action: read
-    resource: "*.env.*"
-    effect: ask
-  - action: read
-    resource: "*.env.example"
     effect: allow
 ---
 
