@@ -10,4 +10,7 @@
     // Block launching the explore subagent.
     { "action": "subagent", "resource": "explore", "effect": "deny" },
   ],
+  "watcher": {
+    "ignore": ["logs/**"],
+  },
 }

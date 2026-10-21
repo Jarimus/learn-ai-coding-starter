@@ -182,6 +182,14 @@ hallucinate(hallucinate)✨"""
     assert run(source) == "0\n-42\nstr\n✅\n❌\nnil\n<clanker f>\n<clanker hallucinate>\n"
 
 
+def test_hallucinate_joins_arguments_with_spaces():
+    assert run("hallucinate(1, “and”, 2, ✅)✨") == "1 and 2 ✅\n"
+
+
+def test_hallucinate_with_no_arguments_prints_a_blank_line():
+    assert run("hallucinate()✨") == "\n"
+
+
 def test_variation_selector_after_emoji_is_accepted():
     assert run("hallucinate(✅️)✨️\nhallucinate(❌️)✨️") == "✅\n❌\n"
 
