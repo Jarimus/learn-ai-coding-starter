@@ -7,8 +7,6 @@
     { "action": "run_slop", "resource": "*", "effect": "allow" },
     // Never read .env files.
     { "action": "read", "resource": "*.env", "effect": "deny" },
-    // Not allowed to commit and push by itself
-    { "action": "skill", "resource": "commit-and-push", "effect": "deny"},
     // Ask before loading this skill.
     { "action": "skill", "resource": "create-test-program", "effect": "ask" },
   ],
