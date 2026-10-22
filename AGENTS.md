@@ -23,6 +23,8 @@ uv run ruff check          # linting
 uv run ty check            # type checking
 ```
 
+After making any code change, run `uv run ruff format` to apply formatting before running the checks above.
+
 For comparison tests, run the focused file with `uv run pytest tests/test_comparisons.py -q`.
 
 ## When to add regression tests
