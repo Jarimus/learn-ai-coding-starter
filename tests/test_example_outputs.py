@@ -10,6 +10,7 @@ EXAMPLES = Path(__file__).resolve().parent.parent / "examples"
 
 EXPECTED_OUTPUTS = {
     "equality": "✅\n❌\n❌\n",
+    "short-circuit": "❌\n✅\n",
 }
 
 
