@@ -85,6 +85,8 @@ score = score + 1✨
 
 Assignment is a statement, not an expression: `name = expression✨`. It updates the nearest existing `slop` variable. Assigning to a `loadbearing` binding is a runtime error (`cannot assign to loadbearing 'LIMIT'`). Reading or assigning an undefined name is a runtime error.
 
+`name += expression✨` is a compound assignment. The right-hand expression is evaluated first, then added to the variable's current value using `+` semantics (numbers add, strings concatenate), and the result is assigned to the nearest existing variable. Assigning to an undefined name or a `loadbearing` binding, or combining incompatible types, is a runtime error.
+
 Every brace block is a lexical scope. Assignment searches the current scope, then each enclosing scope.
 
 ## Control Flow
@@ -162,7 +164,7 @@ variableDecl   -> "slop" IDENTIFIER "=" expression "✨" ;
 
 statement      -> assignStmt | ifStmt | loopStmt | returnStmt
                 | block | expressionStmt ;
-assignStmt     -> IDENTIFIER "=" expression "✨" ;
+assignStmt     -> IDENTIFIER ( "=" | "+=" ) expression "✨" ;
 ifStmt         -> "vibe" expression block ( "nah" block )? ;
 loopStmt       -> "ralph" expression block ;
 returnStmt     -> "ship" expression "✨" ;
