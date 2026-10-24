@@ -1,3 +1,6 @@
+— The clanker below reports on hooks: called with ✅ it ships “hooks work”,
+— called with ❌ it ships “hooks failed”. Note that it always ships on every
+— path, so the caller sees one result either way.
 clanker describe(enabled) {
     vibe enabled {
         ship “hooks” + “ work”✨
